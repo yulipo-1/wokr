@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { 
+      width: 380px; 
+      padding: 20px; 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f8f9fa;
+    }
+    .header { text-align: center; margin-bottom: 20px; }
+    h1 { color: #1a73e8; font-size: 20px; margin-bottom: 5px; }
+    .subtitle { color: #5f6368; font-size: 13px; }
+    
+    .section {
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      border: 1px solid #dadce0;
+    }
+    
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #202124;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+    
+    .input-group {
+      display: flex;
+      gap: 8px;
+    }
+    
+    input[type="password"], input[type="text"] {
+      flex: 1;
+      padding: 10px;
+      border: 2px solid #dadce0;
+      border-radius: 8px;
+      font-size: 13px;
+    }
+    
+    button {
+      background: #1a73e8;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 16px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    
+    button:hover { background: #1557b0; }
+    
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 12px;
+    }
+    
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 24px;
+    }
+    
+    .switch input { opacity: 0; width: 0; height: 0; }
+    
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 24px;
+    }
+    
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    
+    input:checked + .slider { background-color: #34a853; }
+    input:checked + .slider:before { transform: translateX(20px); }
+    
+    .status {
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 13px;
+      display: none;
+    }
+    
+    .status.show { display: block; }
+    .status.success { background: #e8f5e9; color: #2e7d32; }
+    .status.error { background: #ffebee; color: #c62828; }
+    
+    .info {
+      font-size: 12px;
+      color: #5f6368;
+      line-height: 1.5;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #eeeeee;
+    }
+    
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      margin: 8px 0;
+    }
+    
+    .feature-list li {
+      padding: 4px 0;
+      font-size: 12px;
+      color: #202124;
+    }
+    
+    .feature-list li:before {
+      content: "✓ ";
+      color: #34a853;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🎓 SmartBook AI Pro</h1>
+    <div class="subtitle">Auto-Solve with Multi-Select Support</div>
+  </div>
+
+  <div class="section">
+    <label>OpenRouter API Key</label>
+    <div class="input-group">
+      <input type="password" id="apiKey" placeholder="sk-or-v1-...">
+      <button id="toggleBtn" style="padding: 10px;">👁</button>
+    </div>
+    <button id="saveBtn" style="width: 100%; margin-top: 10px;">Save API Key</button>
+    
+    <div id="status" class="status"></div>
+    
+    <div style="margin-top: 12px; font-size: 12px;">
+      <a href="https://openrouter.ai/keys" target="_blank" style="color: #1a73e8;">Get free API key →</a>
+    </div>
+  </div>
+
+  <div class="section">
+    <label style="margin-bottom: 12px;">Features</label>
+    <ul class="feature-list">
+      <li>Auto-detection of Multiple Choice vs Multi-Select</li>
+      <li>Selects ALL correct answers for checkbox questions</li>
+      <li>Auto-continues to next question automatically</li>
+      <li>Draggable floating panel</li>
+      <li>Visual highlighting of selected answers</li>
+    </ul>
+    
+    <div class="info">
+      <strong>How to use:</strong><br>
+      1. Enter API key above<br>
+      2. Open any SmartBook quiz<br>
+      3. Enable "Auto-Continue" in the floating panel<br>
+      4. Click "Solve & Auto-Continue"<br>
+      5. Watch it auto-solve entire assignments!
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
