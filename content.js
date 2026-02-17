@@ -17,6 +17,10 @@
       this.observer = null;
       this.retryCount = 0;
       this.maxRetries = 3;
+      
+      // Configuration constants
+      this.FUZZY_MATCH_THRESHOLD = 0.3; // Maximum 30% difference for fuzzy matching
+      this.RIGHT_SIDE_THRESHOLD = 0.7; // Buttons on right 70% of screen width
     }
 
     // Initialize the solver
@@ -344,7 +348,10 @@
       matchedOption.element.dispatchEvent(new Event('change', { bubbles: true }));
       
       // Highlight the selected option
-      matchedOption.element.closest('label, div')?.style.setProperty('background-color', '#d4edda', 'important');
+      const selectedElement = matchedOption.element.closest('label, div');
+      if (selectedElement) {
+        selectedElement.style.backgroundColor = '#d4edda';
+      }
 
       await this.sleep(500);
       console.log('[Blackboard Solver] ✓ Answer selected');
@@ -363,8 +370,8 @@
         }
       }
 
-      // Only return if the match is reasonably good (less than 30% different)
-      if (bestScore < target.length * 0.3) {
+      // Only return if the match is reasonably good (threshold defined in constructor)
+      if (bestScore < target.length * this.FUZZY_MATCH_THRESHOLD) {
         console.log('[Blackboard Solver] Best fuzzy match score:', bestScore);
         return bestMatch;
       }
@@ -450,7 +457,7 @@
           const rect = btn.getBoundingClientRect();
           const text = btn.textContent.trim();
           const hasArrow = btn.innerHTML.includes('arrow') || btn.innerHTML.includes('→') || btn.innerHTML.includes('&gt;');
-          const isOnRight = rect.right > window.innerWidth * 0.7;
+          const isOnRight = rect.right > window.innerWidth * this.RIGHT_SIDE_THRESHOLD;
           return (hasArrow || isOnRight || text.match(/next|continue|submit/i)) && !btn.disabled;
         });
       }
