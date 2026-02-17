@@ -1,20 +1,16 @@
 {
   "manifest_version": 3,
-  "name": "SmartBook AI Solver",
-  "version": "1.2.0",
-  "description": "AI-powered answer assistant for McGraw Hill SmartBook with OpenRouter integration",
+  "name": "Blackboard Ultra AI Solver",
+  "version": "1.0.0",
+  "description": "AI-powered test automation for Blackboard Ultra using OpenRouter",
   "permissions": [
     "activeTab",
     "storage",
     "scripting"
   ],
   "host_permissions": [
-    "https://*.mheducation.com/*",
-    "https://connect.mheducation.com/*",
-    "https://learn.mheducation.com/*",
-    "https://aleks.com/*",
-    "https://*.aleks.com/*",
-    "https://openrouter.ai/*"
+    "https://online.epcc.edu/*",
+    "https://openrouter.ai/api/*"
   ],
   "background": {
     "service_worker": "background.js"
@@ -22,29 +18,13 @@
   "content_scripts": [
     {
       "matches": [
-        "https://*.mheducation.com/*",
-        "https://connect.mheducation.com/*",
-        "https://learn.mheducation.com/*",
-        "https://aleks.com/*",
-        "https://*.aleks.com/*"
+        "https://online.epcc.edu/*"
       ],
       "js": ["content.js"],
-      "css": ["styles.css"],
-      "run_at": "document_idle",
-      "all_frames": true
+      "run_at": "document_idle"
     }
   ],
   "action": {
-    "default_popup": "popup.html",
-    "default_icon": {
-      "16": "icon/icon16.png",
-      "48": "icon/icon48.png",
-      "128": "icon/icon128.png"
-    }
-  },
-  "icons": {
-    "16": "icon/icon16.png",
-    "48": "icon/icon48.png",
-    "128": "icon/icon128.png"
+    "default_popup": "popup.html"
   }
 }
