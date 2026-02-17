@@ -123,11 +123,17 @@
     const labels = document.querySelectorAll('label');
     let foundAnswer = false;
 
+    // Normalize the answer text for better matching
+    const normalizedAnswer = answerText.trim().toLowerCase();
+
     labels.forEach(label => {
       const labelText = label.textContent.trim();
+      const normalizedLabel = labelText.toLowerCase();
       
-      // Check if this label contains the answer text
-      if (labelText.includes(answerText) || answerText.includes(labelText)) {
+      // Check for exact match or high similarity
+      if (normalizedLabel === normalizedAnswer || 
+          normalizedLabel.includes(normalizedAnswer) || 
+          (normalizedAnswer.length > 10 && normalizedAnswer.includes(normalizedLabel))) {
         // Find associated radio button
         const radioButton = label.querySelector('input[type="radio"]') || 
                           document.querySelector(`input[type="radio"]#${label.htmlFor}`);
@@ -155,11 +161,20 @@
   function clickSubmitButton() {
     console.log('[Content] Looking for Submit/Next button...');
 
-    // Try various common button selectors
-    const buttonSelectors = [
-      'button:contains("Submit")',
-      'button:contains("Next")',
-      'button:contains("Continue")',
+    // Check text content of buttons
+    const buttons = document.querySelectorAll('button, input[type="submit"]');
+    
+    for (const button of buttons) {
+      const text = button.textContent || button.value || '';
+      if (text.match(/submit|next|continue/i)) {
+        console.log('[Content] Clicking button:', text);
+        button.click();
+        return;
+      }
+    }
+
+    // Try common class/id selectors if text matching fails
+    const commonSelectors = [
       'input[type="submit"]',
       'button[type="submit"]',
       '.submit-button',
@@ -168,13 +183,10 @@
       '#next'
     ];
 
-    // Since :contains is not standard, we need to check text content
-    const buttons = document.querySelectorAll('button, input[type="submit"]');
-    
-    for (const button of buttons) {
-      const text = button.textContent || button.value || '';
-      if (text.match(/submit|next|continue/i)) {
-        console.log('[Content] Clicking button:', text);
+    for (const selector of commonSelectors) {
+      const button = document.querySelector(selector);
+      if (button) {
+        console.log('[Content] Clicking button via selector:', selector);
         button.click();
         return;
       }

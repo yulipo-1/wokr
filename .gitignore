@@ -1,6 +1,9 @@
 # Backup files
 content_original.js
 
+# Test files
+test_page.html
+
 # Node modules
 node_modules/
 
