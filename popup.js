@@ -57,7 +57,10 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
       
-      if (!tab.url.includes('online.epcc.edu')) {
+      // Validate that we're on a Blackboard Ultra test page
+      // Check that the URL hostname matches expected domain
+      const url = new URL(tab.url);
+      if (url.hostname !== 'online.epcc.edu') {
         showStatus('Please navigate to a Blackboard Ultra test page first', 'error');
         return;
       }
